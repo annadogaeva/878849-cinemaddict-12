@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анна Догаева](https://up.htmlacademy.ru/ecmascript/12/user/878849).
-* Наставник: `Неизвестно`.
+* Наставник: `Кексобот`.
 
 ---
 
