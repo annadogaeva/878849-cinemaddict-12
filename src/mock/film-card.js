@@ -1,16 +1,20 @@
-import {getRandomNumber, randomBoolean} from "../functions";
-import {shuffle} from "../functions";
-import {getRandomArrayElements} from "../functions";
+import {getRandomNumber, randomBoolean} from "../utils";
+import {shuffle} from "../utils";
+import {getRandomArrayElements} from "../utils";
 import {MONTHES} from "../const";
 
 const generateDescriptions = (quantity, text, minSentences, maxSentences) => {
-  let sentences = text.split('. ');
+  let sentences = text.split(`. `);
   let descriptions = [];
 
   for (let i = 0; i < quantity; i++) {
     for (let j = 0; j < getRandomNumber(minSentences, maxSentences); j++) {
       sentences = shuffle(sentences);
-      descriptions[i] ? descriptions[i] = descriptions[i].toString() + sentences[j].toString() + '. ' : descriptions[i] = sentences[j].toString() + '. ';
+      if (descriptions[i]) {
+        descriptions[i] = descriptions[i].toString() + sentences[j].toString() + `. `;
+      } else {
+        descriptions[i] = sentences[j].toString() + `. `;
+      }
     }
   }
   return descriptions;
@@ -19,13 +23,13 @@ const generateDescriptions = (quantity, text, minSentences, maxSentences) => {
 const generateDuration = () => {
   const hours = getRandomNumber(1, 3);
   const minutes = getRandomNumber(0, 60);
-  return hours + 'h ' + minutes + 'm ';
+  return hours + `h ` + minutes + `m `;
 };
 
 const generateComments = (quantity) => {
   let comments = [];
 
-  for(let i = 0; i < quantity; i++) {
+  for (let i = 0; i < quantity; i++) {
     let comment = {
       text: getRandomArrayElements(COMMENTS_TEXTS),
       author: getRandomArrayElements(COMMENTS_AUTHORS),
@@ -114,7 +118,7 @@ const generateFilms = () => {
       isWatched: randomBoolean(),
       isFavourite: randomBoolean(),
     }
-  }
+  };
 };
 
 export {generateFilms};

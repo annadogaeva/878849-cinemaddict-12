@@ -4,7 +4,9 @@ const getRandomNumber = (min, max, fractionDigits = 0) => {
 };
 
 const shuffle = (array) => {
-  var j, x, i;
+  let j;
+  let x;
+  let i;
   for (i = array.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
     x = array[i];
@@ -17,8 +19,8 @@ const shuffle = (array) => {
 const getRandomArrayElements = (array, quantity = 1) => {
   let result = [];
 
-  for (let i=0; i < quantity; i++) {
-    let randomEl = array[Math.floor(Math.random()*array.length)];
+  for (let i = 0; i < quantity; i++) {
+    let randomEl = array[Math.floor(Math.random() * array.length)];
     result.push(randomEl);
   }
 
@@ -27,9 +29,10 @@ const getRandomArrayElements = (array, quantity = 1) => {
 
 const randomBoolean = () => {
   return Math.random() < 0.5;
-}
+};
 
-export {getRandomNumber};
-export {shuffle};
-export {getRandomArrayElements};
-export {randomBoolean};
+const render = (container, template, place = `beforeEnd`) => {
+  container.insertAdjacentHTML(place, template);
+};
+
+export {getRandomNumber, shuffle, getRandomArrayElements, randomBoolean, render};

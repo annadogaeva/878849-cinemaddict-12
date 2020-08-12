@@ -1,56 +1,50 @@
-import {createUserRankTemplate} from './components/user-rank.js';
-import {createMenuTemplate} from './components/menu.js';
-import {createSortingTemplate} from './components/sorting.js';
-import {createFilmCardTemplate} from './components/film-card.js';
-import {createShowMoreButtonTemplate} from './components/show-more-button.js';
-import {createFilmsTemplate} from './components/films.js';
-import {createFilmsListTemplate} from './components/films-list.js';
-import {createTopRatedFilmsListTemplate} from './components/top-rated-films-list.js';
-import {createMostCommentedFilmsListTemplate} from './components/most-commented-films-list.js';
-import {createFilmDetailsTemplate} from './components/film-details.js';
-import {createCommentSectionTemplate} from './components/comment-section.js';
-import {createCommentTemplate} from './components/comment.js';
-import {createCommentFormTemplate} from './components/comment-form.js';
-import {createEmojiTemplate} from './components/emoji.js';
+import {render} from "./utils";
+
+import {createUserRankTemplate} from './view/user-rank.js';
+import {createMenuTemplate} from './view/menu.js';
+import {createSortingTemplate} from './view/sorting.js';
+import {createFilmCardTemplate} from './view/film-card.js';
+import {createShowMoreButtonTemplate} from './view/show-more-button.js';
+import {createFilmsTemplate} from './view/films.js';
+import {createFilmsListTemplate} from './view/films-list.js';
+import {createTopRatedFilmsListTemplate} from './view/top-rated-films-list.js';
+import {createMostCommentedFilmsListTemplate} from './view/most-commented-films-list.js';
+// import {createFilmDetailsTemplate} from './view/film-details.js';
+// import {createCommentSectionTemplate} from './view/comment-section.js';
+// import {createCommentTemplate} from './view/comment.js';
+// import {createCommentFormTemplate} from './view/comment-form.js';
+// import {createEmojiTemplate} from './view/emoji.js';
 
 import {generateFilms} from "./mock/film-card";
-import {EMOJI} from "./mock/film-card";
-import {getRandomNumber} from "./functions";
+// import {EMOJI} from "./mock/film-card";
+// import {getRandomNumber} from "./utils";
 
+const ALL_FILMS_QUANTITY = 20;
 const FILMS_QUANTITY = 5;
 const FILMS_EXTRA_QUANTITY = 2;
 
-const render = (container, template, place = `beforeEnd`) => {
-  container.insertAdjacentHTML(place, template);
-};
-
 const siteHeader = document.querySelector(`.header`);
 const siteMainArea = document.querySelector(`.main`);
-const siteBody = document.body;
+// const siteBody = document.body;
 
 render(siteHeader, createUserRankTemplate());
 render(siteMainArea, createMenuTemplate(), `afterBegin`);
 render(siteMainArea, createSortingTemplate());
 render(siteMainArea, createFilmsTemplate());
 
-/*render films*/
+/* render films */
 const films = siteMainArea.querySelector(`.films`);
 
 render(films, createFilmsListTemplate());
 const filmsListContainer = films.querySelector(`.films-list__container`);
 
-const ALL_FILMS_QUANTITY = 20;
 let filmsData = [];
-for(let i = 0; i < ALL_FILMS_QUANTITY; i++) {
+for (let i = 0; i < ALL_FILMS_QUANTITY; i++) {
   filmsData.push(generateFilms());
 }
 
-console.log(filmsData);
-
-
 for (let i = 0; i < FILMS_QUANTITY; i++) {
-  render(filmsListContainer, createFilmCardTemplate
-    (
+  render(filmsListContainer, createFilmCardTemplate(
       filmsData[i].title,
       filmsData[i].poster,
       filmsData[i].rating,
@@ -59,15 +53,14 @@ for (let i = 0; i < FILMS_QUANTITY; i++) {
       filmsData[i].genres,
       filmsData[i].description,
       filmsData[i].comments.length
-    )
+  )
   );
-};
+}
 
-let filmsCounter = FILMS_QUANTITY;
-console.log(filmsCounter);
+let filmsCounter = FILMS_QUANTITY; // we've rendered first n elements
 
 
-/*end render films*/
+/* end render films */
 
 render(filmsListContainer, createShowMoreButtonTemplate(), `afterEnd`);
 
@@ -78,12 +71,21 @@ const filmsListExtraContainers = films.querySelectorAll(`.films-list--extra .fil
 
 for (let i = 0; i < filmsListExtraContainers.length; i++) {
   for (let j = 0; j < FILMS_EXTRA_QUANTITY; j++) {
-    render(filmsListExtraContainers[i], createFilmCardTemplate(), `beforeEnd`);
+    render(filmsListExtraContainers[i], createFilmCardTemplate(
+        filmsData[j].title,
+        filmsData[j].poster,
+        filmsData[j].rating,
+        filmsData[j].date.year,
+        filmsData[j].duration,
+        filmsData[j].genres,
+        filmsData[j].description,
+        filmsData[j].comments.length
+    ), `beforeEnd`);
   }
 }
 
-/*renderPopup*/
-//
+/* renderPopup */
+
 // render(siteBody, createFilmDetailsTemplate
 //   (
 //     filmsData[0].title,
@@ -133,28 +135,33 @@ for (let i = 0; i < filmsListExtraContainers.length; i++) {
 //   render(emojiList, createEmojiTemplate(EMOJI[i]));
 // }
 
-/*end render popup*/
+/* end render popup */
 
+
+// show more button
 const showMoreBtn = document.querySelector(`.films-list__show-more`);
 
 showMoreBtn.addEventListener(`click`, () => {
-  for (let j = 0; j < ALL_FILMS_QUANTITY; j++) {
-    for (let i = filmsCounter; i < FILMS_QUANTITY; i++) {
-      render(filmsListContainer, createFilmCardTemplate
-        (
-          filmsData[i].title,
-          filmsData[i].poster,
-          filmsData[i].rating,
-          filmsData[i].date.year,
-          filmsData[i].duration,
-          filmsData[i].genres,
-          filmsData[i].description,
-          filmsData[i].comments.length
-        )
-      );
 
+  if (filmsCounter !== ALL_FILMS_QUANTITY) {
+
+    for (let i = 0; i < FILMS_QUANTITY; i++) {
+      render(filmsListContainer, createFilmCardTemplate(
+          filmsData[filmsCounter].title,
+          filmsData[filmsCounter].poster,
+          filmsData[filmsCounter].rating,
+          filmsData[filmsCounter].date.year,
+          filmsData[filmsCounter].duration,
+          filmsData[filmsCounter].genres,
+          filmsData[filmsCounter].description,
+          filmsData[filmsCounter].comments.length
+      )
+      );
       filmsCounter++;
     }
+
+  } else {
+    showMoreBtn.setAttribute(`disabled`, `true`);
   }
 
-  });
+});
