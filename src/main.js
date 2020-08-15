@@ -47,20 +47,20 @@ render(filmsListContainer, createShowMoreButtonTemplate(), `afterEnd`);
 const showMoreBtn = document.querySelector(`.films-list__show-more`);
 
 let filmsData = [];
-for (let i = 0; i < ALL_FILMS_QUANTITY; i++) { //films data generation
+for (let i = 0; i < ALL_FILMS_QUANTITY; i++) { // films data generation
   filmsData.push(generateFilms());
 }
 
-let filmsCounter = 0; //init rendered films counter
+let filmsCounter = 0; // init rendered films counter
 
 for (let i = 0; i < FILMS_QUANTITY; i++) {
-  if(filmsData[i]) {
+  if (filmsData[i]) {
     render(filmsListContainer, createFilmCardTemplate(filmsData[i]));
 
     filmsCounter++;
 
-    if(filmsCounter >= ALL_FILMS_QUANTITY) {
-      showMoreBtn.classList.add('visually-hidden');
+    if (filmsCounter >= ALL_FILMS_QUANTITY) {
+      showMoreBtn.classList.add(`visually-hidden`);
     }
   }
 }
@@ -68,21 +68,18 @@ for (let i = 0; i < FILMS_QUANTITY; i++) {
 // show more button
 showMoreBtn.addEventListener(`click`, () => {
   for (let i = 0; i < FILMS_QUANTITY; i++) {
-    if(filmsData[filmsCounter]) {
+    if (filmsData[filmsCounter]) {
       render(filmsListContainer, createFilmCardTemplate(filmsData[filmsCounter]));
       filmsCounter++;
 
-      if(filmsCounter >= ALL_FILMS_QUANTITY) {
-        showMoreBtn.classList.add('visually-hidden');
+      if (filmsCounter >= ALL_FILMS_QUANTITY) {
+        showMoreBtn.classList.add(`visually-hidden`);
       }
     }
   }
 });
 
-
 /* end render films */
-
-
 
 render(films, createTopRatedFilmsListTemplate(`Top rated`));
 render(films, createMostCommentedFilmsListTemplate(`Most commented`));
@@ -96,10 +93,10 @@ for (let i = 0; i < filmsListExtraContainers.length; i++) {
 }
 
 /* renderPopup */
-const filmLinks = films.querySelectorAll('.film-card__comments');
+const filmLinks = films.querySelectorAll(`.film-card__comments`);
 
-for(let filmLink of filmLinks) {
-  filmLink.addEventListener('click', (e) => {
+for (let filmLink of filmLinks) {
+  filmLink.addEventListener(`click`, (e) => {
     e.preventDefault();
     render(siteBody, createFilmDetailsTemplate(filmsData[0]));
 
@@ -108,9 +105,9 @@ for(let filmLink of filmLinks) {
     render(filmsDetails, createCommentSectionTemplate(filmsData[0].comments.length));
 
     const commentsList = filmsDetails.querySelector(`.film-details__comments-list`);
-    const filmDetailsBottom = filmsDetails.querySelector(`.form-details__bottom-container`)
+    const filmDetailsBottom = filmsDetails.querySelector(`.form-details__bottom-container`);
 
-    for(let i = 0; i < filmsData[0].comments.length; i++) {
+    for (let i = 0; i < filmsData[0].comments.length; i++) {
       render(commentsList, createCommentTemplate(filmsData[0].comments[i]));
     }
 
@@ -118,7 +115,7 @@ for(let filmLink of filmLinks) {
 
     const emojiList = filmsDetails.querySelector(`.film-details__emoji-list`);
 
-    for(let i = 0; i < EMOJI.length; i++) {
+    for (let i = 0; i < EMOJI.length; i++) {
       render(emojiList, createEmojiTemplate(EMOJI[i]));
     }
   });
@@ -127,8 +124,5 @@ for(let filmLink of filmLinks) {
 
 /* end render popup */
 
-const footerStatistics = document.querySelector('.footer__statistics');
+const footerStatistics = document.querySelector(`.footer__statistics`);
 render(footerStatistics, createFooterStatisticsTemplate(getRandomNumber(100, 1000)));
-
-
-

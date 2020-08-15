@@ -2,26 +2,26 @@ import {getRandomNumber} from "../utils";
 
 const generateMenu = () => {
   return {
-    all : {
+    all: {
       title: `All movies`,
       isActive: true,
     },
-    watchlist : {
+    watchlist: {
       title: `Watchlist`,
       count: getRandomNumber(1, 100),
     },
-    history : {
+    history: {
       title: `History`,
       count: getRandomNumber(1, 100),
     },
-    favourites : {
+    favourites: {
       title: `Favourites`,
       count: getRandomNumber(1, 100),
     },
-    stats : {
+    stats: {
       title: `Stats`,
     },
-  }
+  };
 };
 
 export {generateMenu};
